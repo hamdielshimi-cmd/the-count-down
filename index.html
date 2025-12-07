@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nutcracker – Cairo Opera House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body,html{height:100%;width:100%;overflow:hidden;background:#fff;font-family:'Playfair Display',serif}
+
+    /* Winter background */
+    .bg{
+        position:fixed;inset:0;
+        background:linear-gradient(rgba(10,10,50,0.75),rgba(15,15,60,0.85)),
+                   url('https://images.unsplash.com/photo-1543573852-6f6851d6e9ca?w=1920&q=80') center/cover no-repeat;
+        z-index:1;
+    }
+
+    /* Thick smoky borders coming from the 4 sides */
+    .smoky-border {
+        position:fixed;
+        pointer-events:none;
+        z-index:2;
+    }
+    .top    {top:0;left:0;right:0;height:280px;background:radial-gradient(circle at center, rgba(15,20,60,0.95) 0%, transparent 75%);}
+    .bottom {bottom:0;left:0;right:0;height:280px;background:radial-gradient(circle at center, rgba(15,20,60,0.95) 0%, transparent 75%);}
+    .left   {top:0;bottom:0;left:0;width:280px;background:radial-gradient(circle at center, rgba(15,20,60,0.95) 0%, transparent 75%);}
+    .right  {top:0;bottom:0;right:0;width:280px;background:radial-gradient(circle at center, rgba(15,20,60,0.95) 0%, transparent 75%);}
+
+    /* Very light centre panel so text stays perfectly readable */
+    .centre-panel{
+        position:fixed;
+        inset:8% 12%;
+        background:rgba(20,25,70,0.25);
+        backdrop-filter:blur(14px);
+        border-radius:40px;
+        z-index:3;
+        padding:60px 40px;
+        text-align:center;
+        color:#fff;
+        animation:fade 3s;
+    }
+
+    .title{font-family:'Great Vibes',cursive;font-size:7.5rem;color:#ffd700;text-shadow:0 0 30px gold;margin-bottom:10px}
+    .subtitle{font-family:'Cinzel',serif;font-size:2.4rem;letter-spacing:5px;color:#eef}
+    .details{font-size:1.5rem;margin:30px 0 50px;color:#ddd}
+
+    .countdown{
+        display:inline-flex;gap:40px;padding:40px 70px;background:rgba(0,0,30,0.3);
+        backdrop-filter:blur(12px);border-radius:28px;border:2px solid rgba(255,215,0,0.25);
+        box-shadow:inset 0 0 80px rgba(255,248,220,0.15);
+    }
+    .num{font-family:'Cinzel',serif;font-size:4.8rem;font-weight:700;color:#fff;text-shadow:0 0 30px gold}
+    .lbl{font-size:1.2rem;letter-spacing:4px;color:#ccc;text-transform:uppercase}
+
+    canvas{position:fixed;inset:0;pointer-events:none;z-index:4}
+
+    @keyframes fade{from{opacity:0}to{opacity:1}}
+
+    @media (max-width:860px){
+        .centre-panel{inset:5%;padding:40px 20px}
+        .title{font-size:5rem}
+        .countdown{gap:20px;padding:30px 40px}
+        .num{font-size:3.5rem}
+        .top,.bottom,.left,.right{height:180px;width:180px}
+    }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- Thick smoky borders from 4 sides (hides the white cut line completely) -->
+<div class="smoky-border top"></div>
+<div class="smoky-border bottom"></div>
+<div class="smoky-border left"></div>
+<div class="smoky-border right"></div>
+
+<!-- Light centre panel with all text + countdown -->
+<div class="centre-panel">
+    <h1 class="title">The Nutcracker</h1>
+    <div class="subtitle">The Prestige of the Cairo Opera House Main Hall</div>
+    <div class="details">December 10, 2025 | 12:30 PM Matinée & 6:00 PM Soirée</div>
+
+    <div class="countdown" id="c">
+        <div><div class="num" id="days">00</div><div class="lbl">Days</div></div>
+        <div><div class="num" id="hours">00</div><div class="lbl">Hours</div></div>
+        <div><div class="num" id="minutes">00</div><div class="lbl">Minutes</div></div>
+        <div><div class="num" id="seconds">00</div><div class="lbl">Seconds</div></div>
+    </div>
+</div>
+
+<canvas></canvas>
+
+<script>
+    // Countdown to 10 Dec 2025
+    const target=new Date("2025-12-10T00:00:00").getTime();
+    function u(){
+        const d=target-Date.now();
+        if(d<=0){document.getElementById("c").innerHTML="<div style='font-size:4rem;color:gold;text-shadow:0 0 40px gold'>The Curtain Rises Today!</div>";return;}
+        document.getElementById("days").textContent=Math.floor(d/864e5).toString().padStart(2,"0");
+        document.getElementById("hours").textContent=Math.floor(d%864e5/36e5).toString().padStart(2,"0");
+        document.getElementById("minutes").textContent=Math.floor(d%36e5/6e4).toString().padStart(2,"0");
+        document.getElementById("seconds").textContent=Math.floor(d%6e4/1e3).toString().padStart(2,"0");
+    }
+    setInterval(u,1000);u();
+
+    // Gentle snow
+    const c=document.querySelector("canvas"),x=c.getContext("2d");
+    c.width=innerWidth;c.height=innerHeight;
+    addEventListener("resize",()=>{c.width=innerWidth;c.height=innerHeight});
+    const f=Array.from({length:180},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:1+Math.random()*2.5,s:0.4+Math.random()*0.8,o:0.5+Math.random()*0.5}));
+    (function s(){x.clearRect(0,0,innerWidth,innerHeight);f.forEach(a=>{x.beginPath();x.arc(a.x,a.y,a.r,0,Math.PI*2);x.fillStyle=`rgba(255,255,255,${a.o})`;x.fill();a.y+=a.s;if(a.y>innerHeight)a.y=-10});requestAnimationFrame(s)})();
+</script>
+</body>
+</html>
