@@ -32,7 +32,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4 md:p-8">
+<body class="bg-gray-900 text-white h-screen flex items-center justify-center p-3 md:p-8 overflow-hidden">
 
     <!-- 1. Video Background Element -->
     <video autoplay loop muted playsinline id="video-background">
@@ -41,48 +41,49 @@
     </video>
 
     <!-- 2. Centered Content Overlay -->
-    <div class="z-10 text-center space-y-6 max-w-lg mx-auto p-8 content-overlay rounded-xl shadow-2xl border border-gray-700/50">
+    <!-- Reduced spacing (space-y-2) and padding (p-3) for a tighter fit on small screens -->
+    <div class="z-10 text-center space-y-2 sm:space-y-3 md:space-y-5 max-w-lg mx-auto p-3 sm:p-5 md:p-8 content-overlay rounded-xl shadow-2xl border border-gray-700/50">
         
         <!-- Main Title -->
-        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight uppercase text-white drop-shadow-lg">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight uppercase text-white drop-shadow-lg">
             THE NUTCRACKER
         </h1>
 
         <!-- Subtitle/Venue -->
-        <p class="text-xl md:text-2xl font-light italic text-gray-300">
+        <p class="text-lg sm:text-xl md:text-2xl font-light italic text-gray-300">
             The Prestige of the Cairo Opera House Main Hall
         </p>
 
         <!-- Dates & Times -->
-        <p class="text-2xl md:text-3xl font-semibold text-yellow-300">
+        <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-yellow-300">
             December 19th, 2025
         </p>
-        <p class="text-lg md:text-xl font-medium text-gray-200">
+        <p class="text-base sm:text-lg md:text-xl font-medium text-gray-200">
             12:30 PM Matinée & 6:00 PM Soirée
         </p>
 
         <!-- 3. Countdown Timer -->
-        <div class="pt-6">
-            <h2 class="text-2xl font-bold mb-4 uppercase tracking-wider">Event Countdown</h2>
-            <div id="countdown" class="flex justify-center space-x-4 md:space-x-8">
+        <div>
+            <h2 class="text-lg sm:text-xl font-bold mb-2 uppercase tracking-wider">Event Countdown</h2>
+            <div id="countdown" class="flex justify-center space-x-3 md:space-x-8">
                 <!-- Days -->
-                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
-                    <span id="days" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                <div class="bg-white/10 p-1 sm:p-2 md:p-3 rounded-lg backdrop-blur-sm">
+                    <span id="days" class="block text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">00</span>
                     <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Days</span>
                 </div>
                 <!-- Hours -->
-                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
-                    <span id="hours" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                <div class="bg-white/10 p-1 sm:p-2 md:p-3 rounded-lg backdrop-blur-sm">
+                    <span id="hours" class="block text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">00</span>
                     <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Hours</span>
                 </div>
                 <!-- Minutes -->
-                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
-                    <span id="minutes" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                <div class="bg-white/10 p-1 sm:p-2 md:p-3 rounded-lg backdrop-blur-sm">
+                    <span id="minutes" class="block text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">00</span>
                     <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Minutes</span>
                 </div>
                 <!-- Seconds -->
-                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
-                    <span id="seconds" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                <div class="bg-white/10 p-1 sm:p-2 md:p-3 rounded-lg backdrop-blur-sm">
+                    <span id="seconds" class="block text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">00</span>
                     <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Seconds</span>
                 </div>
             </div>
@@ -92,7 +93,7 @@
         </div>
 
         <!-- Optional Call to Action -->
-        <button class="mt-8 px-8 py-3 bg-red-600 hover:bg-red-700 text-white text-lg font-bold rounded-full transition duration-300 shadow-xl transform hover:scale-105">
+        <button class="mt-3 sm:mt-5 px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-base sm:text-lg font-bold rounded-full transition duration-300 shadow-xl transform hover:scale-105">
             GET YOUR INVITATION NOW
         </button>
 
