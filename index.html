@@ -1,116 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Nutcracker – Cairo Opera House</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body,html{height:100vh;width:100vw;overflow:hidden;background:#fff;font-family:'Playfair Display',serif}
-
-    /* Winter background */
-    .bg{
-        position:fixed;inset:0;
-        background:linear-gradient(rgba(10,10,50,0.78),rgba(15,15,60,0.88)),
-                   url('https://images.unsplash.com/photo-1543573852-6f6851d6e9ca?w=1920&q=80') center/cover no-repeat;
-        z-index:1;
-    }
-
-    /* Thick smoky borders from all 4 sides – hides the white cut line completely */
-    .smoky{
-        position:fixed;pointer-events:none;z-index:2;
-        background:radial-gradient(circle at center,rgba(10,15,55,0.96) 0%,transparent 72%);
-    }
-    .top{top:0;left:0;right:0;height:300px}
-    .bottom{bottom:0;left:0;right:0;height:300px}
-    .left{top:0;bottom:0;left:0;width:300px}
-    .right{top:0;bottom:0;right:0;width:300px}
-
-    /* Centre panel – smaller safe area so nothing ever gets cropped */
-    .panel{
-        position:fixed;
-        top:8%;left:8%;right:8%;bottom:8%;   /* gives breathing room on all sides */
-        max-height:90vh;
-        background:rgba(15,20,70,0.28);
-        backdrop-filter:blur(16px);
-        -webkit-backdrop-filter:blur(16px);
-        border-radius:40px;
-        z-index:3;
-        padding:40px 30px 60px;
-        text-align:center;
-        color:#fff;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        overflow:hidden;
-    }
-
-    .title{font-family:'Great Vibes',cursive;font-size:clamp(4rem,10vw,8rem);color:#ffd700;text-shadow:0 0 35px gold;margin-bottom:10px}
-    .subtitle{font-family:'Cinzel',serif;font-size:clamp(1.6rem,5vw,2.6rem);letter-spacing:6px;color:#eef;margin-bottom:15px}
-    .details{font-size:clamp(1.1rem,4vw,1.6rem);margin:20px 0 40px;color:#ddd}
-
-    .countdown{
-        display:inline-flex;gap:clamp(20px,5vw,50px);padding:30px 60px;
-        background:rgba(0,0,30,0.35);backdrop-filter:blur(12px);border-radius:28px;
-        border:2px solid rgba(255,215,0,0.3);
-        box-shadow:inset 0 0 90px rgba(255,248,220,0.18);
-    }
-    .num{font-family:'Cinzel',serif;font-size:clamp(2.8rem,8vw,5rem);font-weight:700;color:#fff;text-shadow:0 0 30px gold;line-height:1}
-    .lbl{font-size:1.1rem;letter-spacing:4px;color:#ccc;text-transform:uppercase}
-
-    canvas{position:fixed;inset:0;pointer-events:none;z-index:4}
-
-    @media (max-height:700px){
-        .panel{padding:30px 20px 50px}
-        .countdown{padding:25px 40px;gap:25px}
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Nutcracker | Cairo Opera House</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for video cover and text readability */
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            object-fit: cover; /* Ensures the video covers the entire viewport */
+            filter: brightness(0.6); /* Slightly dim the video for better text contrast */
+        }
+        .content-overlay {
+            /* Use a backdrop filter for a subtle frosted glass effect on supported browsers */
+            backdrop-filter: blur(2px) brightness(0.9);
+            -webkit-backdrop-filter: blur(2px) brightness(0.9);
+            background-color: rgba(0, 0, 0, 0.2); /* Fallback for browsers without backdrop-filter */
+        }
+        /* Custom font style */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4 md:p-8">
 
-<div class="bg"></div>
+    <!-- 1. Video Background Element -->
+    <video autoplay loop muted playsinline id="video-background">
+        <source src="https://ik.imagekit.io/weo7pcw8v/a_fog_smoky_winter_forest_in_a.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-<div class="smoky top"></div>
-<div class="smoky bottom"></div>
-<div class="smoky left"></div>
-<div class="smoky right"></div>
+    <!-- 2. Centered Content Overlay -->
+    <div class="z-10 text-center space-y-6 max-w-lg mx-auto p-8 content-overlay rounded-xl shadow-2xl border border-gray-700/50">
+        
+        <!-- Main Title -->
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight uppercase text-white drop-shadow-lg">
+            THE NUTCRACKER
+        </h1>
 
-<div class="panel">
-    <h1 class="title">The Nutcracker</h1>
-    <div class="subtitle">The Prestige of the Cairo Opera House Main Hall</div>
-    <div class="details">December 10, 2025 | 12:30 PM Matinée & 6:00 PM Soirée</div>
+        <!-- Subtitle/Venue -->
+        <p class="text-xl md:text-2xl font-light italic text-gray-300">
+            The Prestige of the Cairo Opera House Main Hall
+        </p>
 
-    <div class="countdown" id="c">
-        <div><div class="num" id="days">00</div><div class="lbl">Days</div></div>
-        <div><div class="num" id="hours">00</div><div class="lbl">Hours</div></div>
-        <div><div class="num" id="minutes">00</div><div class="lbl">Minutes</div></div>
-        <div><div class="num" id="seconds">00</div><div class="lbl">Seconds</div></div>
+        <!-- Dates & Times -->
+        <p class="text-2xl md:text-3xl font-semibold text-yellow-300">
+            December 19th, 2025
+        </p>
+        <p class="text-lg md:text-xl font-medium text-gray-200">
+            12:30 PM Matinée & 6:00 PM Soirée
+        </p>
+
+        <!-- 3. Countdown Timer -->
+        <div class="pt-6">
+            <h2 class="text-2xl font-bold mb-4 uppercase tracking-wider">Event Countdown</h2>
+            <div id="countdown" class="flex justify-center space-x-4 md:space-x-8">
+                <!-- Days -->
+                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
+                    <span id="days" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                    <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Days</span>
+                </div>
+                <!-- Hours -->
+                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
+                    <span id="hours" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                    <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Hours</span>
+                </div>
+                <!-- Minutes -->
+                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
+                    <span id="minutes" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                    <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Minutes</span>
+                </div>
+                <!-- Seconds -->
+                <div class="bg-white/10 p-3 md:p-4 rounded-lg backdrop-blur-sm">
+                    <span id="seconds" class="block text-4xl md:text-5xl font-extrabold text-white">00</span>
+                    <span class="block text-xs md:text-sm uppercase font-semibold text-gray-400 mt-1">Seconds</span>
+                </div>
+            </div>
+            <p id="countdown-message" class="mt-4 text-lg font-medium text-red-400 hidden">
+                The event is happening now!
+            </p>
+        </div>
+
+        <!-- Optional Call to Action -->
+        <button class="mt-8 px-8 py-3 bg-red-600 hover:bg-red-700 text-white text-lg font-bold rounded-full transition duration-300 shadow-xl transform hover:scale-105">
+            GET YOUR INVITATION NOW
+        </button>
+
     </div>
-</div>
 
-<canvas></canvas>
+    <script>
+        // JavaScript for the Countdown Timer
+        document.addEventListener('DOMContentLoaded', () => {
+            // The target date is December 19th, 2025 (using the 6:00 PM Soirée time as the final deadline)
+            const countDownDate = new Date("Dec 19, 2025 18:00:00").getTime();
+            
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            const messageEl = document.getElementById('countdown-message');
+            const countdownEl = document.getElementById('countdown');
 
-<script>
-    const target=new Date("2025-12-10T00:00:00").getTime();
-    function u(){
-        const d=target-Date.now();
-        if(d<=0){document.getElementById("c").innerHTML="<div style='font-size:4.5rem;color:gold;text-shadow:0 0 50px gold'>The Curtain Rises Today!</div>";return;}
-        document.getElementById("days").textContent=Math.floor(d/864e5).toString().padStart(2,"0");
-        document.getElementById("hours").textContent=Math.floor(d%864e5/36e5).toString().padStart(2,"0");
-        document.getElementById("minutes").textContent=Math.floor(d%36e5/6e4).toString().padStart(2,"0");
-        document.getElementById("seconds").textContent=Math.floor(d%6e4/1e3).toString().padStart(2,"0");
-    }
-    setInterval(u,1000);u();
+            // Function to format numbers with leading zero
+            const formatTime = (time) => {
+                return time < 10 ? `0${time}` : time;
+            }
 
-    // Snow
-    const c=document.querySelector("canvas"),x=c.getContext("2d");
-    c.width=innerWidth;c.height=innerHeight;
-    addEventListener("resize",()=>{c.width=innerWidth;c.height=innerHeight});
-    const f=Array.from({length:180},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:1+Math.random()*2.5,s:0.4+Math.random()*0.8,o:0.5+Math.random()*0.5}));
-    (function s(){x.clearRect(0,0,innerWidth,innerHeight);f.forEach(a=>{x.beginPath();x.arc(a.x,a.y,a.r,0,Math.PI*2);x.fillStyle=`rgba(255,255,255,${a.o})`;x.fill();a.y+=a.s;if(a.y>innerHeight)a.y=-10});requestAnimationFrame(s)})();
-</script>
+            // Update the countdown every 1 second
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                // Calculate days, hours, minutes and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result
+                if (daysEl) daysEl.innerHTML = formatTime(days);
+                if (hoursEl) hoursEl.innerHTML = formatTime(hours);
+                if (minutesEl) minutesEl.innerHTML = formatTime(minutes);
+                if (secondsEl) secondsEl.innerHTML = formatTime(seconds);
+
+                // If the countdown is finished, write some text 
+                if (distance < 0) {
+                    clearInterval(x);
+                    if (countdownEl) countdownEl.classList.add('hidden');
+                    if (messageEl) {
+                        messageEl.classList.remove('hidden');
+                        messageEl.innerHTML = "The Nutcracker is currently underway! Check back for registration updates.";
+                    }
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
